@@ -8,7 +8,7 @@ RUN apt-get update
 
 WORKDIR /app
 
-COPY app/requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Stage 2: Copy compiled binaries and discard source code
@@ -21,7 +21,7 @@ RUN groupadd --system appgroup && \
 # set the working directory and copy the source code
 WORKDIR /app
 
-COPY app/ .
+COPY . .
 
 # Copy installed dependencies from builder stage
 COPY --from=builder /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
