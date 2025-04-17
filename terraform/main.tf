@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket       = "particle41-devops-vasudha"
+    bucket       = "particle41-devops-challenge-vasudha"
     key          = "ecs-app/dev/terraform.tfstate"
     region       = "ap-south-1"
     encrypt        = true
