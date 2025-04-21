@@ -27,3 +27,18 @@ variable "cluster_name" {
   description = "The name of the ECS cluster"
   type = string
 }
+
+variable "ec2_instance_type" {
+  description = "The name of the ECS cluster"
+  type = string
+}
+
+variable "container_image" {
+  description = "The Docker image to run"
+  type = string
+}
+
+variable "container_name" {
+  description = "The name of the Docker container"
+  type = string
+}
