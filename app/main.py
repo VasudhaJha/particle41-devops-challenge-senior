@@ -19,3 +19,18 @@ async def get_time(request: Request):
         timestamp=datetime.now(timezone.utc).isoformat(),
         ip=request.client.host if request.client and request.client.host else "unknown"
     )
+
+@app.get("/", response_model=TimeResponse)
+async def get_time(request: Request):
+    forwarded_for = request.headers.get("x-forwarded-for") # since request is going throuh alb
+    if forwarded_for:
+        ip = forwarded_for.split(",")[0].strip() # if request passes through chain of albs, get the first requester
+    elif request.client and request.client.host:
+        ip = request.client.host
+    else:
+        ip = "unknown"
+
+    return TimeResponse(
+        timestamp=datetime.now(timezone.utc).isoformat(),
+        ip=ip
+    )

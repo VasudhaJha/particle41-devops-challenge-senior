@@ -40,8 +40,6 @@ resource "aws_launch_template" "ecs" {
     name = aws_iam_instance_profile.ecs_instance.name
   }
 
-  key_name = aws_key_pair.bastion_key.key_name
-
   user_data = base64encode(<<EOF
       #!/bin/bash
       set -ex  # debug mode for logs
@@ -68,14 +66,6 @@ resource "aws_launch_template" "ecs" {
 resource "aws_security_group" "ecs_tasks" {
   name   = "${var.project}-ecs-task-sg"
   vpc_id = aws_vpc.main.id
-
-  ingress {
-    description = "Allow traffic from Bastion"
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.bastion_sg.id]  # 👈 Allow from bastion SG
-  }
 
   ingress {
     description = "Allow traffic from ALB"
