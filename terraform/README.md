@@ -30,7 +30,7 @@ Using this configuration will create an `S3` bucket with versioning and server-s
 
 ## State locking
 
-Instead of provisioning extra infrastructure in the form of a dynamodb table for state locking, we use S3 itself. It employs lock file-based state locking mechanism using `use_lockfile = true` in the backend configuration block.
+This project does not provision extra infrastructure for state locking. It employs lock file-based state locking mechanism using `use_lockfile = true` in the backend configuration block which allows using the `S3` remote backend bucket for state locking too.
 
 This avoids the need for DynamoDB-based locking while still ensuring state safety.
 
