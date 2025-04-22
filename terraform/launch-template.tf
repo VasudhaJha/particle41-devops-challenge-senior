@@ -40,18 +40,12 @@ resource "aws_launch_template" "ecs" {
     name = aws_iam_instance_profile.ecs_instance.name
   }
 
-  user_data = base64encode(<<EOF
-      #!/bin/bash
-      set -ex  # debug mode for logs
-
-      # Write ECS cluster name to ECS config using sudo
-      echo "ECS_CLUSTER=particle41-ecs" | sudo tee -a /etc/ecs/ecs.config > /dev/null
-
-      # (Optional but helpful) Log confirmation
-      echo "Wrote ECS_CLUSTER config to /etc/ecs/ecs.config" | sudo tee -a /var/log/user-data.log
-      EOF
-    )
-
+  user_data = base64encode(<<-EOF
+  #!/bin/bash
+  echo "ECS_CLUSTER=${var.cluster_name}" > /etc/ecs/ecs.config
+  echo "ECS_CONTAINER_INSTANCE_PROPAGATE_TAGS_FROM=ec2_instance" >> /etc/ecs/ecs.config
+  EOF
+  )
 
   vpc_security_group_ids = [aws_security_group.ecs_tasks.id]
 
