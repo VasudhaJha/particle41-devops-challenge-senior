@@ -14,14 +14,7 @@ class TimeResponse(BaseModel):
 
 @app.get("/", response_model=TimeResponse)
 async def get_time(request: Request):
-    print("Client Info:", request)
-    return TimeResponse(
-        timestamp=datetime.now(timezone.utc).isoformat(),
-        ip=request.client.host if request.client and request.client.host else "unknown"
-    )
-
-@app.get("/", response_model=TimeResponse)
-async def get_time(request: Request):
+    print("Headers:", dict(request.headers))
     forwarded_for = request.headers.get("x-forwarded-for") # since request is going throuh alb
     if forwarded_for:
         ip = forwarded_for.split(",")[0].strip() # if request passes through chain of albs, get the first requester
