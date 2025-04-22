@@ -17,11 +17,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Read Version from VERSION file
+      - name: Read Version from version file
         id: read_version
         run: |
             cd app 
-            echo "IMAGE_TAG=$(cat VERSION)" >> $GITHUB_ENV
+            echo "IMAGE_TAG=$(cat version)" >> $GITHUB_ENV
 
       - name: Set Up Python
         uses: actions/setup-python@v5
@@ -48,11 +48,11 @@ jobs:
 #       - name: Checkout Code
 #         uses: actions/checkout@v4
 
-#       - name: Read Version from VERSION file
+#       - name: Read Version from version file
 #         id: read_version
 #         run: |
 #             cd app
-#             echo "IMAGE_TAG=$(cat VERSION)" >> $GITHUB_ENV
+#             echo "IMAGE_TAG=$(cat version)" >> $GITHUB_ENV
 
 #       - name: Set Up Terraform
 #         uses: hashicorp/setup-terraform@v3
