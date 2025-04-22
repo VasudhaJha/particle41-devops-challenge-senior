@@ -49,8 +49,8 @@ resource "aws_ecs_task_definition" "simple_time_service" {
       essential = true
       portMappings = [
         {
-          containerPort = 8000
-          hostPort      = 8000
+          containerPort = var.container_port
+          hostPort      = var.host_port
         }
       ]
     }
@@ -67,7 +67,7 @@ resource "aws_ecs_service" "simple_time_service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.ecs.arn
     container_name   = var.container_name
-    container_port   = 8000
+    container_port   = var.container_port
   }
 
   depends_on = [
