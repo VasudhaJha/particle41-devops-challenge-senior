@@ -39,12 +39,21 @@ resource "aws_autoscaling_group" "ecs" {
   # to create the ASG after subnets exist
   depends_on = [aws_subnet.private]
 
-  tag {
+  health_check_type         = "EC2"
+  health_check_grace_period = 300
+
+  instance_refresh {
+   strategy = "Rolling"
+   preferences {
+         min_healthy_percentage = 50
+         instance_warmup        = 60
+      }
+   }
+
+   tag {
     key                 = "Name"
     value               = "${var.project}-ecs-instance"
     propagate_at_launch = true
   }
 
-  health_check_type         = "EC2"
-  health_check_grace_period = 300
 }
