@@ -42,3 +42,13 @@ variable "container_name" {
   description = "The name of the Docker container"
   type = string
 }
+
+variable "container_port" {
+  description = "The port on which the container is running"
+  type = number
+}
+
+variable "host_port" {
+  description = "The port on which the host maps to container"
+  type = number
+}
