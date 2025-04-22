@@ -50,7 +50,7 @@ resource "aws_security_group" "alb" {
 
 resource "aws_lb_target_group" "ecs" {
   name     = "${var.project}-tg"
-  port     = 8000
+  port     = var.host_port
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
   target_type = "instance"
